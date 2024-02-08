@@ -23,12 +23,35 @@ node{
                )
 '''
    }*/
-   stage('Deploy to Tomcat'){
+
+
+   
+   // stage('Deploy to Tomcat'){
+   //   bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
+   // }
+
+   
+   //    stage ('Start Tomcat Server') {
+   //       sleep(time:5,unit:"SECONDS") 
+   //       bat "${tomcatBin}\\service.bat install TomcatService"
+   //       sleep(time:100,unit:"SECONDS")
+   // }
+
+   stages {
+        stage('Stop Tomcat Service') {
+            steps {
+                bat 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin\\service.bat stop'
+            }
+        }
+        
+      stage('Deploy to Tomcat'){
      bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
    }
-      stage ('Start Tomcat Server') {
-         sleep(time:5,unit:"SECONDS") 
-         bat "${tomcatBin}\\service.bat install TomcatService"
-         sleep(time:100,unit:"SECONDS")
-   }
+        
+        stage('Start Tomcat Service') {
+            steps {
+                bat 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin\\service.bat start'
+            }
+        }
+    }
 }
