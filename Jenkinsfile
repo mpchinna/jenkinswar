@@ -28,7 +28,7 @@ node{
    }
       stage ('Start Tomcat Server') {
          sleep(time:5,unit:"SECONDS") 
-         bat "${tomcatBin}\\service.bat"
+         bat "${tomcatBin}\\service.bat install TomcatService"
          sleep(time:100,unit:"SECONDS")
    }
 }
