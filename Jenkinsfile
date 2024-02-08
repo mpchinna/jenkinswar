@@ -1,7 +1,7 @@
 node{
 
-   def tomcatWeb = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\webapps'
-   def tomcatBin = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin'
+   def tomcatWeb = 'd:\\Auto_deployment\\Apache Software Foundation\\Tomcat 9.0\\webapps\\webapps'
+   def tomcatBin = 'd:\\Auto_deployment\\Apache Software Foundation\\Tomcat 9.0\\webapps\\bin'
    def tomcatStatus = ''
    stage('SCM Checkout'){
      git 'https://github.com/mpchinna/jenkinswar.git'
