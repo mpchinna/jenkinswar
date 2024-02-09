@@ -5,7 +5,8 @@ node{
    def tomcatStatus = ''
 
    stage('SCM Checkout'){
-     git 'https://github.com/mpchinna/jenkinswar.git'
+    /* git 'https://github.com/mpchinna/jenkinswar.git'*/
+      git changelog: false, poll: false, url: 'https://github.com/mpchinna/jenkinswar.git'
    }
    stage('Compile-Package-create-war-file'){
       // Get maven home path
