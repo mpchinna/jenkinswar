@@ -1,31 +1,41 @@
-node {
-    def tomcatWeb = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\webapps'
-    def tomcatBin = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin'
-    def tomcatStatus = ''
+node{
 
-    stage('SCM Checkout') {
-        git 'https://github.com/mpchinna/jenkinswar.git'
-    }
+   def tomcatWeb = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\webapps'
+   def tomcatBin = 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin'
+   def tomcatStatus = ''
 
-    stage('Compile-Package-create-war-file') {
-        // Get maven home path
-        def mvnHome = tool name: 'maven-3', type: 'maven'   
-        bat "${mvnHome}/bin/mvn package"
-    }
+   stage('SCM Checkout'){
+     git 'https://github.com/mpchinna/jenkinswar.git'
+   }
+   stage('Compile-Package-create-war-file'){
+      // Get maven home path
+      def mvnHome =  tool name: 'maven-3', type: 'maven'   
+      bat "${mvnHome}/bin/mvn package"
+      }
+/*   stage ('Stop Tomcat Server') {
+               bat ''' @ECHO OFF
+               wmic process list brief | find /i "tomcat" > NUL
+               IF ERRORLEVEL 1 (
+                    echo  Stopped
+               ) ELSE (
+               echo running
+                  "${tomcatBin}\\shutdown.bat"
+                  sleep(time:10,unit:"SECONDS") 
+               )
+'''
+   }*/
 
-    stage('Stop Tomcat Service') {
-        steps {
-            bat 'net stop "Tomcat9"'
-        }
-    }
 
-    stage('Deploy to Tomcat') {
-        bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
-    }
+   stage('Deploy to Tomcat'){
+     bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
+   }
 
-    stage('Start Tomcat Service') {
-        steps {
-            bat 'net start "Tomcat9"'
-        }
-    }
+   
+      stage ('Start Tomcat Server') {
+         sleep(time:5,unit:"SECONDS") 
+         bat "${tomcatBin}\\service.bat install TomcatService"
+         sleep(time:100,unit:"SECONDS")
+   }
+
+    
 }
