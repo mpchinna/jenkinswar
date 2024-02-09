@@ -37,21 +37,31 @@ node{
          sleep(time:100,unit:"SECONDS")
    }
 */
-   stages {
+  /* stages {
         stage('Stop Tomcat Service') {
             steps {
                 bat 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin\\service.bat stop'
             }
         }
         
-      stage('Deploy to Tomcat'){
-     bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
-   }
+    
         
         stage('Start Tomcat Service') {
             steps {
                 bat 'D:\\Auto_deployment\\apache-tomcat-9.0.30\\apache-tomcat-9.0.30\\bin\\service.bat start'
+            } */
+     stage('Stop Tomcat Service') {
+            steps {
+                bat 'net stop "Tomcat9"'
             }
+          stage('Deploy to Tomcat'){
+     bat "copy target\\JenkinsWar.war \"${tomcatWeb}\\JenkinsWar.war\""
+   }
+     stage('Start Tomcat Service') {
+            steps {
+                bat 'net start "Tomcat9"'
+            }
+        }
         }
     }
 }
